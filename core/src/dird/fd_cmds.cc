@@ -740,6 +740,7 @@ static bool SendListItem(JobControlRecord* jcr,
         BErrNo be;
         Jmsg(jcr, M_FATAL, 0, _("Cannot open included file: %s. ERR=%s\n"), p,
              be.bstrerror());
+        fd->fsend("L\n"); /* signal invalid fileset to FD such that it stops listening on the socket */
         return false;
       }
       bstrncpy(buf, code, sizeof(buf));

@@ -300,6 +300,10 @@ void AddFileset(JobControlRecord* jcr, const char* item)
     case 'N': /* Null */
       state = state_none;
       break;
+    case 'L': /* Invalid fileset given to director */
+      jcr->setJobStatusWithPriorityCheck(JS_ErrorTerminated);
+      state = state_error;
+      break;
     case 'F': /* File */
       state = state_include;
       AddFileToFileset(jcr, item, true, jcr->fd_impl->ff->fileset);

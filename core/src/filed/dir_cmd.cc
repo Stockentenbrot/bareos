@@ -1274,6 +1274,7 @@ static bool FilesetCmd(JobControlRecord* jcr)
     StripTrailingJunk(dir->msg);
     Dmsg1(500, "Fileset: %s\n", dir->msg);
     AddFileset(jcr, dir->msg);
+    if (jcr->fd_impl->ff->fileset->state == state_error) return false; // if the Director has signaled an error, exit loop
   }
 
   if (!TermFileset(jcr)) { return false; }
